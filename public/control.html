@@ -1,0 +1,95 @@
+<!-- コントロール用HTML -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>野球スコアコントローラー</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var score = {
+            home: 0,
+            away: 0,
+            strikes: 0,
+            balls: 0,
+            outs: 0
+        };
+
+        function updateScore() {
+            $('#homeScore').text(score.home);
+            $('#awayScore').text(score.away);
+            $('#strikes').text(score.strikes);
+            $('#balls').text(score.balls);
+            $('#outs').text(score.outs);
+        }
+
+        function increment(key) {
+            if (key === 'strikes' || key === 'balls' || key === 'outs') {
+                if (score[key] < 2) {
+                    score[key]++;
+                } else {
+                    score[key] = 0;
+                }
+            } else {
+                score[key]++;
+            }
+            updateScore();
+        }
+
+        function decrement(key) {
+            if (score[key] > 0) {
+                score[key]--;
+                updateScore();
+            }
+        }
+
+function sendScore() {
+    $.ajax({
+        url: '/update-score', // 正しいエンドポイントに修正
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(score),
+        success: function(response) {
+            console.log('Score updated successfully.');
+        }
+    });
+}
+
+
+        $(document).ready(function() {
+            updateScore();
+        });
+    </script>
+</head>
+<body>
+    <h1>野球スコアコントローラー</h1>
+    <div>
+        <h2>HOMEチーム</h2>
+        <button onclick="decrement('home')">←</button>
+        <span id="homeScore">0</span>
+        <button onclick="increment('home')">→</button>
+
+        <h2>AWAYチーム</h2>
+        <button onclick="decrement('away')">←</button>
+        <span id="awayScore">0</span>
+        <button onclick="increment('away')">→</button>
+
+        <h2>ストライク</h2>
+        <button onclick="increment('strikes')">+</button>
+        <span id="strikes">0</span>
+        <button onclick="decrement('strikes')">-</button>
+
+        <h2>ボール</h2>
+        <button onclick="increment('balls')">+</button>
+        <span id="balls">0</span>
+        <button onclick="decrement('balls')">-</button>
+
+        <h2>アウト</h2>
+        <button onclick="increment('outs')">+</button>
+        <span id="outs">0</span>
+        <button onclick="decrement('outs')">-</button>
+
+        <br><br>
+        <button onclick="sendScore()">スコア更新</button>
+    </div>
+</body>
+</html>

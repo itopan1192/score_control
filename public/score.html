@@ -1,0 +1,49 @@
+<!-- スコア用HTML -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>野球スコアボード</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function fetchScore() {
+    $.ajax({
+        url: '/score-data', // 正しいエンドポイントに変更
+        type: 'GET',
+        success: function(data) {
+            $('#homeScore').text(data.home);
+            $('#awayScore').text(data.away);
+            $('#strikes').text(data.strikes);
+            $('#balls').text(data.balls);
+            $('#outs').text(data.outs);
+        }
+    });
+}
+
+
+        $(document).ready(function() {
+            setInterval(fetchScore, 3000); // 3秒ごとにスコアを更新
+        });
+    </script>
+<style>
+        body {
+            background-color: #98FF98; /* ミントグリーンの背景色 */
+            color: white; /* フォントカラーを白に設定 */
+        }
+        #scoreBoard {
+            /* スコアボードのスタイルをここに追加 */
+            /* 必要に応じてここにもフォントカラーの設定を追加 */
+        }
+    </style>
+</head>
+<body>
+    <h1>野球スコアボード</h1>
+    <div id="scoreBoard">
+        <h2>HOMEチーム: <span id="homeScore">0</span></h2>
+        <h2>AWAYチーム: <span id="awayScore">0</span></h2>
+        <h3>ストライク: <span id="strikes">0</span></h3>
+        <h3>ボール: <span id="balls">0</span></h3>
+        <h3>アウト: <span id="outs">0</span></h3>
+    </div>
+</body>
+</html>
