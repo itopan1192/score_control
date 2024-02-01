@@ -1,49 +1,33 @@
-<!-- スコア用HTML -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>野球スコアボード</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function fetchScore() {
-    $.ajax({
-        url: '/score-data', // 正しいエンドポイントに変更
-        type: 'GET',
-        success: function(data) {
-            $('#homeScore').text(data.home);
-            $('#awayScore').text(data.away);
-            $('#strikes').text(data.strikes);
-            $('#balls').text(data.balls);
-            $('#outs').text(data.outs);
-        }
-    });
-}
-
-
-        $(document).ready(function() {
-            setInterval(fetchScore, 3000); // 3秒ごとにスコアを更新
-        });
-    </script>
-<style>
+    <title>野球スコアボード管理</title>
+    <style>
         body {
-            background-color: #98FF98; /* ミントグリーンの背景色 */
-            color: white; /* フォントカラーを白に設定 */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
         }
-        #scoreBoard {
-            /* スコアボードのスタイルをここに追加 */
-            /* 必要に応じてここにもフォントカラーの設定を追加 */
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>野球スコアボード</h1>
-    <div id="scoreBoard">
-        <h2>HOMEチーム: <span id="homeScore">0</span></h2>
-        <h2>AWAYチーム: <span id="awayScore">0</span></h2>
-        <h3>ストライク: <span id="strikes">0</span></h3>
-        <h3>ボール: <span id="balls">0</span></h3>
-        <h3>アウト: <span id="outs">0</span></h3>
-    </div>
+    <h1>野球スコアボード管理ページ</h1>
+    <p>以下のボタンからスコアの管理または表示へ遷移できます。</p>
+    <a href="control.html" class="button">スコア管理</a>
+    <!-- score.htmlへのリンクが別タブで開くようにtarget="_blank"を追加 -->
+    <a href="score.html" class="button" target="_blank">スコアボード表示</a>
 </body>
 </html>
